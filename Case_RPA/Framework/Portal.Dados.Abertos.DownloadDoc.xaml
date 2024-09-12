@@ -1,0 +1,772 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Portal_Dados_Abertos_DownloadDoc" this:Portal_Dados_Abertos_DownloadDoc.in_strDocumento="DADOS ABERTOS CNPJ" this:Portal_Dados_Abertos_DownloadDoc.in_strURL="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:si="clr-namespace:System.IO;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:uasf="clr-namespace:UiPath.Activities.System.FileOperations;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_strDocumento" Type="InArgument(x:String)" />
+    <x:Property Name="in_strURL" Type="InArgument(x:String)" />
+    <x:Property Name="in_strDiretorioCaminho" Type="InArgument(x:String)" />
+    <x:Property Name="out_strDiretorioCompleto" Type="OutArgument(x:String)" />
+    <x:Property Name="in_strExtensaoDocumento" Type="InArgument(x:String)" />
+    <x:Property Name="in_strUrlZips" Type="InArgument(x:String)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1312,2111</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Portal_Dados_Abertos_DownloadDoc_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Models</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>UiPath.Platform.SyncObjects</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Models.CV</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Models</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Numerics</x:String>
+      <x:String>UiPath.Activities.System.FileOperations</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>UiPath.Platform</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.UIAutomationNext.Models.ExtractData</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.Activities.System.Encode</x:String>
+      <x:String>UiPath.Activities.System.Compression.Workflow</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>UiPath.CodedWorkflows</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.Packaging</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Portal_Dados_Abertos_DownloadDoc" sap:VirtualizedContainerService.HintSize="1322,2046" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="strTipoDocumento" />
+      <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Switch x:TypeArguments="x:String" DisplayName="Switch - Escolher Extensao" Expression="[in_strExtensaoDocumento.Trim.ToUpper]" sap:VirtualizedContainerService.HintSize="1260,1910" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+      <Switch.Default>
+        <Sequence DisplayName="Business Exception" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_14">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="354,175" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Tipo de documento nao cadastrado. Tipo: &quot;+strTipoDocumento]" />
+          <Throw Exception="[new BusinessRuleException(&quot;Tipo de documento nao cadastrado. Tipo: &quot;+strTipoDocumento)]" sap:VirtualizedContainerService.HintSize="354,115" sap2010:WorkflowViewState.IdRef="Throw_3" />
+        </Sequence>
+      </Switch.Default>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <uix:NApplicationCard x:Key="PDF" AttachMode="ByInstance" CloseMode="Never" DisplayName="Use Browser Chrome: Portal de Dados Abertos" sap:VirtualizedContainerService.HintSize="1220,1670" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" OpenMode="IfNotOpen" ScopeGuid="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V2" WindowResize="Maximize">
+        <uix:NApplicationCard.Body>
+          <ActivityAction x:TypeArguments="x:Object">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1186,1453" sap2010:WorkflowViewState.IdRef="Sequence_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Sequence DisplayName="Download Doc" sap:VirtualizedContainerService.HintSize="1124,1363" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Sequence DisplayName="Buscar/Abrir documento" sap:VirtualizedContainerService.HintSize="1062,229" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <uix:NCheckState DisplayName="Check App State 'Documento Atual'" sap:VirtualizedContainerService.HintSize="390,57" sap2010:WorkflowViewState.IdRef="NCheckState_4" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                    <uix:NCheckState.IfExists>
+                      <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,308" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click - 'Acessar o recurso'" sap:VirtualizedContainerService.HintSize="388,218" sap2010:WorkflowViewState.IdRef="NClick_2" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                          <uix:NClick.Target>
+                            <uix:TargetAnchorable BrowserURL="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" CVScreenId="b3a1463f-b7eb-401f-bbd6-f8febcd57d83" CvElementArea="880, 938, 198, 41" CvTextArea="921, 951, 114, 13" CvTextArgument="Acessar O recurso" CvType="Button" DesignTimeRectangle="882, 940, 194, 38" DesignTimeScaleFactor="1" ElementType="Button" FullSelectorArgument="&lt;webctrl id='btnDownloadUrl' idx='3' tag='BUTTON' /&gt;" FuzzySelectorArgument="&lt;webctrl id='btnDownloadUrl' type='button' tag='BUTTON' class='btn btn btn-secondary btn-secondary' aaname=' Acessar o recurso ' check:innerText='Acessar o recurso' /&gt;" Guid="06995dc3-18cf-4e68-a6cd-a9c52b940b6d" InformativeScreenshot="296c730745f713cdb76b282250a10bfd.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Portal de Dados Abertos' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                              <uix:TargetAnchorable.Anchors>
+                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                  <uix:Target CVScreenId="b3a1463f-b7eb-401f-bbd6-f8febcd57d83" CvTextArea="881, 810, 719, 21" CvTextArgument="[in_strDocumento]" CvType="Text" DesignTimeRectangle="882, 808, 997, 28" ElementType="Text" FullSelectorArgument="&lt;webctrl idx='3' parentid='collapse-recursos' tag='H4' /&gt;" FuzzySelectorArgument="[&quot;&lt;webctrl type='' parentid='collapse-recursos' tag='H4' class='' aaname='&quot;+in_strDocumento+&quot;' check:innerText='&quot;+in_strDocumento+&quot;' /&gt;&quot;]" Guid="53390dec-d028-44f2-8a62-29c9a4e6f347" SearchSteps="FuzzySelector, CV" />
+                                </scg:List>
+                              </uix:TargetAnchorable.Anchors>
+                            </uix:TargetAnchorable>
+                          </uix:NClick.Target>
+                          <uix:NClick.VerifyOptions>
+                            <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                              <uix:VerifyExecutionOptions.Retry>
+                                <InArgument x:TypeArguments="x:Boolean" />
+                              </uix:VerifyExecutionOptions.Retry>
+                              <uix:VerifyExecutionOptions.Timeout>
+                                <InArgument x:TypeArguments="x:Double" />
+                              </uix:VerifyExecutionOptions.Timeout>
+                            </uix:VerifyExecutionOptions>
+                          </uix:NClick.VerifyOptions>
+                        </uix:NClick>
+                      </Sequence>
+                    </uix:NCheckState.IfExists>
+                    <uix:NCheckState.IfNotExists>
+                      <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </uix:NCheckState.IfNotExists>
+                    <uix:NCheckState.Target>
+                      <uix:TargetAnchorable BrowserURL="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" CVScreenId="937dbcf7-420b-4e44-b8b9-2426360fbd3b" CvTextArea="881, 585, 432, 24" CvTextArgument="[in_strDocumento]" CvType="Text" DesignTimeRectangle="882, 583, 997, 27" DesignTimeScaleFactor="1" ElementType="Text" FullSelectorArgument="[string.Format(&quot;&lt;webctrl parentid='collapse-recursos' tag='H4' aaname='{0}' /&gt;&quot;, in_strDocumento)]" FuzzySelectorArgument="[&quot;&lt;webctrl parentid='collapse-recursos' tag='H4' type='' class='' aaname='&quot;+in_strDocumento+&quot;' check:innerText='&quot;+in_strDocumento+&quot;' /&gt;&quot;]" Guid="d5e3b2c1-2753-4f38-8d34-dc758019cbfb" InformativeScreenshot="0b77f2e0d0aa0b67c4d0d454daddded1.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Portal de Dados Abertos' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                    </uix:NCheckState.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </uix:NCheckState>
+                  <uix:NCheckState DisplayName="Check App State - Verifica se existe o botão de download" sap:VirtualizedContainerService.HintSize="390,50" sap2010:WorkflowViewState.IdRef="NCheckState_1" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Timeout="10" Version="V3">
+                    <uix:NCheckState.IfExists>
+                      <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,25" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Baixando documento&quot;]" />
+                        <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click - Baixar" sap:VirtualizedContainerService.HintSize="388,218" sap2010:WorkflowViewState.IdRef="NClick_3" InteractionMode="HardwareEvents" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                          <uix:NClick.Target>
+                            <uix:TargetAnchorable BrowserURL="https://www.gov.br/receitafederal/dados/cnpj-metadados.pdf" CVScreenId="96bd1196-0a25-4927-bd32-5afcd70abb0f" CvElementArea="1814, 162, 21, 23" CvType="Icon" DesignTimeRectangle="1814, 165, 20, 20" DesignTimeScaleFactor="1" FullSelectorArgument="&lt;ctrl name='Microsoft Word - NOVOLAYOUTDOSDADOSABERTOSDOCNPJ-convertido' role='document' /&gt;&lt;ctrl name='Transferir' role='push button' /&gt;&lt;ctrl idx='2' role='grouping' /&gt;" FuzzySelectorArgument="&lt;ctrl name='Microsoft Word -*' role='document' /&gt;&lt;ctrl name='Transferir' role='push button' /&gt;&lt;ctrl automationid='' role='grouping' /&gt;" Guid="bf018949-32a6-4cc2-8a40-c13168bcc5a7" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADaSURBVEhL7ZNBCsIwEEU9k4ti1BY9iiCIIB5G9BC2nsFigxV1ZXqSniDyCwWbTppRFDdZvE0yeY8mtNcPhP4lPuCEFZjNF3qz3TXAGjVrwgpAWJZlA6xRsyY+4MQaWK7WlQScMtkKYK3exyzlANbAKJrq6+3eEpuc80s1SzlA5xXhIASUGGBPhBPybI3zDSCgIpmUTjlgPTJEEL7KB+OInDVhBQCEEB/TlC0H7ADAlwTDkNyz8VbgE6wBVRSNR+3ioRTpANZAnByqn4nDPk5IB/jfFX0LH3Ag9BPhsFXKEQC8igAAAABJRU5ErkJggg==" InformativeScreenshot="cfc6f5d662ca61a43ad02d9fe9a8daa8.png" ScopeSelectorArgument="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Microsoft Word -*' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                              <uix:TargetAnchorable.Anchors>
+                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                  <uix:Target DesignTimeRectangle="713, 206, 793, 1122" FullSelectorArgument="&lt;ctrl name='Microsoft Word -*' role='document' /&gt;&lt;ctrl name='Documento PDF*' role='document' /&gt;&lt;ctrl name='Página *' role='pane' /&gt;" FuzzySelectorArgument="&lt;ctrl name='Microsoft Word - NOVOLAYOUTDOSDADOSABERTOSDOCNPJ-convertido' role='document' /&gt;&lt;ctrl name='Documento PDF com 6 páginas' role='document' /&gt;&lt;ctrl name='Página 1' role='pane' automationid='' check:fulltext='Página 1 de 6&amp;#xD;&amp;#xA; Novo Layout para os DADOS ABERTOS do CNPJ:&amp;#xD;&amp;#xA; EMPRESAS&amp;#xD;&amp;#xA; Campo Descrição&amp;#xD;&amp;#xA; CNPJ BÁSICO NÚMERO BASE DE INSCRIÇÃO NO CNPJ (OITO PRIMEIROS DÍGITOS &amp;#xD;&amp;#xA;DO CNPJ).&amp;#xD;&amp;#xA;RAZÃO SOCIAL / &amp;#xD;&amp;#xA;NOME&amp;#xD;&amp;#xA;EMPRESARIAL&amp;#xD;&amp;#xA; NOME EMPRESARIAL DA PESSOA JURÍDICA&amp;#xD;&amp;#xA; NATUREZA&amp;#xD;&amp;#xA;JURÍDICA CÓDIGO DA NATUREZA JURÍDICA&amp;#xD;&amp;#xA; QUALIFICAÇÃO DO &amp;#xD;&amp;#xA;RESPONSÁVEL&amp;#xD;&amp;#xA; QUALIFICAÇÃO DA PESSOA FÍSICA RESPONSÁVEL PELA EMPRESA&amp;#xD;&amp;#xA; CAPITAL SOCIAL DA &amp;#xD;&amp;#xA;EMPRESA&amp;#xD;&amp;#xA; CAPITAL SOCIAL DA EMPRESA&amp;#xD;&amp;#xA; PORTE DA EMPRESA CÓDIGO DO PORTE DA EMPRESA:&amp;#xD;&amp;#xA;00 – NÃO INFORMADO&amp;#xD;&amp;#xA;01 - MICRO EMPRESA&amp;#xD;&amp;#xA; 03 - EMPRESA DE PEQUENO PORTE&amp;#xD;&amp;#xA; 05 - DEMAIS&amp;#xD;&amp;#xA; ENTE FEDERATIVO &amp;#xD;&amp;#xA;RESPONSÁVEL O ENTE FEDERATIVO RESPONSÁVEL É PREENCHIDO PARA OS CASOS &amp;#xD;&amp;#xA;DE ÓRGÃOS E ENTIDADES DO GRUPO DE NATUREZA JURÍDICA 1XXX. &amp;#xD;&amp;#xA;PARA AS DEMAIS NATUREZAS, ESTE ATRIBUTO FICA EM BRANCO.&amp;#xD;&amp;#xA; .&amp;#xD;&amp;#xA; ESTABELECIMENTOS&amp;#xD;&amp;#xA; Campo Descrição&amp;#xD;&amp;#xA; CNPJ BÁSICO NÚMERO BASE DE INSCRIÇÃO NO CNPJ (OITO PRIMEIROS DÍGITOS &amp;#xD;&amp;#xA;DO CNPJ).&amp;#xD;&amp;#xA; CNPJ ORDEM NÚMERO DO ESTABELECIMENTO DE INSCRIÇÃO NO CNPJ (DO &amp;#xD;&amp;#xA;NONO ATÉ O DÉCIMO SEGUNDO DÍGITO DO CNPJ).&amp;#xD;&amp;#xA; CNPJ DV DÍGITO VERIFICADOR DO NÚMERO DE INSCRIÇÃO NO CNPJ (DOIS&amp;#xD;&amp;#xA;ÚLTIMOS DÍGITOS DO CNPJ).&amp;#xD;&amp;#xA; IDENTIFICADOR &amp;#xD;&amp;#xA;MATRIZ/FILIAL&amp;#xD;&amp;#xA;CÓDIGO DO IDENTIFICADOR MATRIZ/FILIAL: &amp;#xD;&amp;#xA;1 – MATRIZ&amp;#xD;&amp;#xA;2 – FILIAL' /&gt;" Guid="0cca9eb4-af1c-411c-95f7-c1e4ae6ec21d" SearchSteps="Selector, FuzzySelector" />
+                                </scg:List>
+                              </uix:TargetAnchorable.Anchors>
+                            </uix:TargetAnchorable>
+                          </uix:NClick.Target>
+                          <uix:NClick.VerifyOptions>
+                            <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                              <uix:VerifyExecutionOptions.Retry>
+                                <InArgument x:TypeArguments="x:Boolean" />
+                              </uix:VerifyExecutionOptions.Retry>
+                              <uix:VerifyExecutionOptions.Timeout>
+                                <InArgument x:TypeArguments="x:Double" />
+                              </uix:VerifyExecutionOptions.Timeout>
+                            </uix:VerifyExecutionOptions>
+                          </uix:NClick.VerifyOptions>
+                        </uix:NClick>
+                      </Sequence>
+                    </uix:NCheckState.IfExists>
+                    <uix:NCheckState.IfNotExists>
+                      <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="450,25" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Error" Message="[&quot;Erro ao tentar baixar documento &quot; + in_strDocumento]" />
+                        <Throw Exception="[New Exception( &quot;Erro ao tentar baixar documento &quot; + in_strDocumento)]" sap:VirtualizedContainerService.HintSize="388,115" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                      </Sequence>
+                    </uix:NCheckState.IfNotExists>
+                    <uix:NCheckState.Target>
+                      <uix:TargetAnchorable BrowserURL="https://www.gov.br/receitafederal/dados/cnpj-metadados.pdf" DesignTimeRectangle="308, 151, 1603, 889" DesignTimeScaleFactor="1" FullSelectorArgument="&lt;ctrl name='Microsoft Word -*' role='document' /&gt;&lt;ctrl idx='*' role='grouping' /&gt;" FuzzySelectorArgument="&lt;ctrl name='Microsoft Word - NOVOLAYOUTDOSDADOSABERTOSDOCNPJ-convertido' role='document' /&gt;&lt;ctrl automationid='' role='grouping' check:fulltext='Carregamento do PDF concluído&amp;#xD;&amp;#xA;Página 1 de 6&amp;#xD;&amp;#xA; Novo Layout para os DADOS ABERTOS do CNPJ:&amp;#xD;&amp;#xA; EMPRESAS&amp;#xD;&amp;#xA; Campo Descrição&amp;#xD;&amp;#xA; CNPJ BÁSICO NÚMERO BASE DE INSCRIÇÃO NO CNPJ (OITO PRIMEIROS DÍGITOS &amp;#xD;&amp;#xA;DO CNPJ).&amp;#xD;&amp;#xA;RAZÃO SOCIAL / &amp;#xD;&amp;#xA;NOME&amp;#xD;&amp;#xA;EMPRESARIAL&amp;#xD;&amp;#xA; NOME EMPRESARIAL DA PESSOA JURÍDICA&amp;#xD;&amp;#xA; NATUREZA&amp;#xD;&amp;#xA;JURÍDICA CÓDIGO DA NATUREZA JURÍDICA&amp;#xD;&amp;#xA; QUALIFICAÇÃO DO &amp;#xD;&amp;#xA;RESPONSÁVEL&amp;#xD;&amp;#xA; QUALIFICAÇÃO DA PESSOA FÍSICA RESPONSÁVEL PELA EMPRESA&amp;#xD;&amp;#xA; CAPITAL SOCIAL DA &amp;#xD;&amp;#xA;EMPRESA&amp;#xD;&amp;#xA; CAPITAL SOCIAL DA EMPRESA&amp;#xD;&amp;#xA; PORTE DA EMPRESA CÓDIGO DO PORTE DA EMPRESA:&amp;#xD;&amp;#xA;00 – NÃO INFORMADO&amp;#xD;&amp;#xA;01 - MICRO EMPRESA&amp;#xD;&amp;#xA; 03 - EMPRESA DE PEQUENO PORTE&amp;#xD;&amp;#xA; 05 - DEMAIS&amp;#xD;&amp;#xA; ENTE FEDERATIVO &amp;#xD;&amp;#xA;RESPONSÁVEL O ENTE FEDERATIVO RESPONSÁVEL É PREENCHIDO PARA OS CASOS &amp;#xD;&amp;#xA;DE ÓRGÃOS E ENTIDADES DO GRUPO DE NATUREZA JURÍDICA 1XXX. &amp;#xD;&amp;#xA;PARA AS DEMAIS NATUREZAS, ESTE ATRIBUTO FICA EM BRANCO.&amp;#xD;&amp;#xA; .&amp;#xD;&amp;#xA; ESTABELECIMENTOS&amp;#xD;&amp;#xA; Campo Descrição&amp;#xD;&amp;#xA; CNPJ BÁSICO NÚMERO BASE DE INSCRIÇÃO NO CNPJ (OITO PRIMEIROS DÍGITOS &amp;#xD;&amp;#xA;DO CNPJ).&amp;#xD;&amp;#xA; CNPJ ORDEM NÚMERO DO ESTABELECIMENTO DE INSCRIÇÃO NO CNPJ (DO &amp;#xD;&amp;#xA;NONO ATÉ O DÉCIMO SEGUNDO DÍGITO DO CNPJ).&amp;#xD;&amp;#xA; CNPJ DV DÍGITO VERIFICADOR DO NÚMERO DE INSCRIÇÃO NO CNPJ (DOIS&amp;#xD;&amp;#xA;ÚLTIMOS DÍGITOS DO CNPJ).&amp;#xD;&amp;#xA; IDENTIFICADOR &amp;#xD;&amp;#xA;MATRIZ/FILIAL&amp;#xD;&amp;#xA;CÓDIGO DO IDENTIFICADOR MATRIZ/FILIAL: &amp;#xD;&amp;#xA;1 – MATRIZ&amp;#xD;&amp;#xA;2 – FILIAL&amp;#xD;&amp;#xA;Página 2 de 6&amp;#xD;&amp;#xA; NOME FANTASIA CORRESPONDE AO NOME FANTASIA&amp;#xD;&amp;#xA; SITUAÇÃO CADASTRAL&amp;#xD;&amp;#xA; CÓDIGO DA SITUAÇÃO CADASTRAL: &amp;#xD;&amp;#xA;01 – NULA&amp;#xD;&amp;#xA;2 – ATIVA&amp;#xD;&amp;#xA;3 – SUSPENSA&amp;#xD;&amp;#xA;4 – INAPTA&amp;#xD;&amp;#xA;08 – BAIXADA&amp;#xD;&amp;#xA; DATA SITUAÇÃO &amp;#xD;&amp;#xA;CADASTRAL&amp;#xD;&amp;#xA; DATA DO EVENTO DA SITUAÇÃO CADASTRAL&amp;#xD;&amp;#xA; MOTIVO SITUAÇÃO &amp;#xD;&amp;#xA;CADASTRAL&amp;#xD;&amp;#xA; CÓDIGO DO MOTIVO DA SITUAÇÃO CADASTRAL&amp;#xD;&amp;#xA; NOME DA CIDADE NO &amp;#xD;&amp;#xA;EXTERIOR&amp;#xD;&amp;#xA;NOME DA CIDADE NO EXTERIOR&amp;#xD;&amp;#xA; PAIS CÓDIGO DO PAIS&amp;#xD;&amp;#xA; DATA DE INÍCIO &amp;#xD;&amp;#xA;ATIVIDADE DATA DE INÍCIO DA ATIVIDADE&amp;#xD;&amp;#xA; CNAE FISCAL PRINCIPAL CÓDIGO DA ATIVIDADE ECONÔMICA PRINCIPAL DO &amp;#xD;&amp;#xA;ESTABELECIMENTO&amp;#xD;&amp;#xA;CNAE FISCAL &amp;#xD;&amp;#xA;SECUNDÁRIA CÓDIGO DA(S) ATIVIDADE(S) ECONÔMICA(S) SECUNDÁRIA(S) DO &amp;#xD;&amp;#xA;ESTABELECIMENTO&amp;#xD;&amp;#xA; TIPO DE LOGRADOURO DESCRIÇÃO DO TIPO DE LOGRADOURO&amp;#xD;&amp;#xA; LOGRADOURO NOME DO LOGRADOURO ONDE SE LOCALIZA O &amp;#xD;&amp;#xA;ESTABELECIMENTO.&amp;#xD;&amp;#xA;NÚMERO NÚMERO ONDE SE LOCALIZA O ESTABELECIMENTO. QUANDO &amp;#xD;&amp;#xA;NÃO HOUVER PREENCHIMENTO DO NÚMERO HAVERÁ ‘S/N’.&amp;#xD;&amp;#xA; COMPLEMENTO COMPLEMENTO PARA O ENDEREÇO DE LOCALIZAÇÃO DO &amp;#xD;&amp;#xA;ESTABELECIMENTO&amp;#xD;&amp;#xA; BAIRRO BAIRRO ONDE SE LOCALIZA O ESTABELECIMENTO.&amp;#xD;&amp;#xA; CEP CÓDIGO DE ENDEREÇAMENTO POSTAL REFERENTE AO &amp;#xD;&amp;#xA;LOGRADOURO NO QUAL O ESTABELECIMENTO ESTA LOCALIZADO&amp;#xD;&amp;#xA; UF SIGLA DA UNIDADE DA FEDERAÇÃO EM QUE SE ENCONTRA O &amp;#xD;&amp;#xA;ESTABELECIMENTO&amp;#xD;&amp;#xA; MUNICÍPIO CÓDIGO DO MUNICÍPIO DE JURISDIÇÃO ONDE SE ENCONTRA O &amp;#xD;&amp;#xA;ESTABELECIMENTO&amp;#xD;&amp;#xA;Página 3 de 6&amp;#xD;&amp;#xA; DDD 1 CONTÉM O DDD 1&amp;#xD;&amp;#xA;TELEFONE 1 CONTÉM O NÚMERO DO TELEFONE 1&amp;#xD;&amp;#xA;DDD 2 CONTÉM O DDD 2&amp;#xD;&amp;#xA;TELEFONE 2 CONTÉM O NÚMERO DO TELEFONE 2&amp;#xD;&amp;#xA;DDD DO FAX CONTÉM O DDD DO FAX&amp;#xD;&amp;#xA;FAX CONTÉM O NÚMERO DO FAX&amp;#xD;&amp;#xA;CORREIO ELETRÔNICO CONTÉM O E-MAIL DO CONTRIBUINTE&amp;#xD;&amp;#xA;SITUAÇÃO ESPECIAL SITUAÇÃO ESPECIAL DA EMPRESA&amp;#xD;&amp;#xA;DATA DA SITUAÇÃO &amp;#xD;&amp;#xA;ESPECIAL&amp;#xD;&amp;#xA;DATA EM QUE A EMPRESA ENTROU EM SITUAÇÃO ESPECIAL&amp;#xD;&amp;#xA; .&amp;#xD;&amp;#xA;DADOS DO SIMPLES&amp;#xD;&amp;#xA;Campo Descrição&amp;#xD;&amp;#xA;CNPJ BÁSICO NÚMERO BASE DE INSCRIÇÃO NO CNPJ (OITO PRIMEIROS &amp;#xD;&amp;#xA;DÍGITOS DO CNPJ).&amp;#xD;&amp;#xA;OPÇÃO PELO SIMPLES INDICADOR DA EXISTÊNCIA DA OPÇÃO PELO SIMPLES. &amp;#xD;&amp;#xA;S - SIM&amp;#xD;&amp;#xA;N - NÃO&amp;#xD;&amp;#xA;EM BRANCO – OUTROS&amp;#xD;&amp;#xA;DATA DE OPÇÃO PELO &amp;#xD;&amp;#xA;SIMPLES&amp;#xD;&amp;#xA;DATA DE OPÇÃO PELO SIMPLES&amp;#xD;&amp;#xA; DATA DE EXCLUSÃO DO &amp;#xD;&amp;#xA;SIMPLES&amp;#xD;&amp;#xA;DATA DE EXCLUSÃO DO SIMPLES&amp;#xD;&amp;#xA; OPÇÃO PELO MEI INDICADOR DA EXISTÊNCIA DA OPÇÃO PELO MEI &amp;#xD;&amp;#xA;S - SIM&amp;#xD;&amp;#xA;N - NÃO&amp;#xD;&amp;#xA;EM BRANCO - OUTROS&amp;#xD;&amp;#xA;DATA DE OPÇÃO PELO MEI DATA DE OPÇÃO PELO MEI&amp;#xD;&amp;#xA;DATA DE EXCLUSÃO DO &amp;#xD;&amp;#xA;MEI DATA DE EXCLUSÃO DO MEI&amp;#xD;&amp;#xA; .&amp;#xD;&amp;#xA;Página 4 de 6&amp;#xD;&amp;#xA; SÓCIOS&amp;#xD;&amp;#xA; Campo Descrição&amp;#xD;&amp;#xA; CNPJ BÁSICO NÚMERO BASE DE INSCRIÇÃO NO CNPJ (CADASTRO&amp;#xD;&amp;#xA;NACIONAL DA&amp;#xD;&amp;#xA;PESSOA JURÍDICA).&amp;#xD;&amp;#xA;IDENTIFICADOR DE SÓCIO CÓDIGO DO IDENTIFICADOR DE SÓCIO &amp;#xD;&amp;#xA;1 – PESSOA JURÍDICA&amp;#xD;&amp;#xA;2 – PESSOA FÍSICA&amp;#xD;&amp;#xA;3 – ESTRANGEIRO&amp;#xD;&amp;#xA;NOME DO SÓCIO (NO CASO &amp;#xD;&amp;#xA;PF) OU RAZÃO SOCIAL (NO &amp;#xD;&amp;#xA;CASO PJ)&amp;#xD;&amp;#xA; NOME DO SÓCIO PESSOA FÍSICA OU A RAZÃO SOCIAL E/OU &amp;#xD;&amp;#xA;NOME&amp;#xD;&amp;#xA;EMPRESARIAL DA PESSOA JURÍDICA E/OU NOME DO&amp;#xD;&amp;#xA;SÓCIO/RAZÃO SOCIAL DO SÓCIO ESTRANGEIRO&amp;#xD;&amp;#xA;CNPJ/CPF DO SÓCIO CPF OU CNPJ DO SÓCIO (SÓCIO ESTRANGEIRO NÃO TEM &amp;#xD;&amp;#xA;ESTA INFORMAÇÃO).&amp;#xD;&amp;#xA; QUALIFICAÇÃO DO SÓCIO CÓDIGO DA QUALIFICAÇÃO DO SÓCIO&amp;#xD;&amp;#xA; DATA DE ENTRADA&amp;#xD;&amp;#xA;SOCIEDADE DATA DE ENTRADA NA SOCIEDADE&amp;#xD;&amp;#xA; PAIS CÓDIGO PAÍS DO SÓCIO ESTRANGEIRO&amp;#xD;&amp;#xA; REPRESENTANTE LEGAL NÚMERO DO CPF DO REPRESENTANTE LEGAL&amp;#xD;&amp;#xA; NOME DO REPRESENTANTE NOME DO REPRESENTANTE LEGAL&amp;#xD;&amp;#xA; QUALIFICAÇÃO DO &amp;#xD;&amp;#xA;REPRESENTANTE LEGAL&amp;#xD;&amp;#xA; CÓDIGO DA QUALIFICAÇÃO DO REPRESENTANTE LEGAL&amp;#xD;&amp;#xA; FAIXA ETÁRIA CÓDIGO CORRESPONDENTE À FAIXA ETÁRIA DO SÓCIO&amp;#xD;&amp;#xA; .&amp;#xD;&amp;#xA;Será gerado um arquivo para cada tabela de domínio listado abaixo:&amp;#xD;&amp;#xA; PAÍSES&amp;#xD;&amp;#xA; Campo Descrição&amp;#xD;&amp;#xA; CÓDIGO CÓDIGO DO PAÍS&amp;#xD;&amp;#xA; DESCRIÇÃO NOME DO PAÍS&amp;#xD;&amp;#xA; .&amp;#xD;&amp;#xA;MUNICÍPIOS&amp;#xD;&amp;#xA;Página 5 de 6&amp;#xD;&amp;#xA; Campo Descrição&amp;#xD;&amp;#xA;CÓDIGO CÓDIGO DO MUNICÍPIO&amp;#xD;&amp;#xA;DESCRIÇÃO NOME DO MUNICÍPIO&amp;#xD;&amp;#xA;.&amp;#xD;&amp;#xA;QUALIFICAÇÕES DE &amp;#xD;&amp;#xA;SÓCIOS&amp;#xD;&amp;#xA;Campo Descrição&amp;#xD;&amp;#xA;CÓDIGO CÓDIGO DA QUALIFICAÇÃO DO SÓCIO&amp;#xD;&amp;#xA;DESCRIÇÃO NOME DA QUALIFICAÇÃO DO SÓCIO&amp;#xD;&amp;#xA;.&amp;#xD;&amp;#xA;NATUREZAS JURÍDICAS&amp;#xD;&amp;#xA;Campo Descrição&amp;#xD;&amp;#xA;CÓDIGO CÓDIGO DA NATUREZA JURÍDICA&amp;#xD;&amp;#xA;DESCRIÇÃO NOME DA NATUREZA JURÍDICA&amp;#xD;&amp;#xA;.&amp;#xD;&amp;#xA;CNAEs&amp;#xD;&amp;#xA;Campo Descrição&amp;#xD;&amp;#xA;CÓDIGO CÓDIGO DA ATIVIDADE ECONÔMICA&amp;#xD;&amp;#xA;DESCRIÇÃO NOME DA ATIVIDADE ECONÔMICA&amp;#xD;&amp;#xA; 1. Formato do arquivo&amp;#xD;&amp;#xA;O formato do arquivo deve ter o padrão de carga automática em Bancos de Dados &amp;#xD;&amp;#xA;Relacionais (RDBMS – Relational Database Management Systems); usar ponto e vírgula (;) &amp;#xD;&amp;#xA;como separador de atributos;&amp;#xD;&amp;#xA;2. O campo 169 (CNPJ/CPF DO SÓCIO) e 271 (CNPJ/CPF DO REPRESENTANTE) do &amp;#xD;&amp;#xA;layout de sócios devem ser descaracterizados conforme a regra abaixo:&amp;#xD;&amp;#xA;Ocultação de informações pessoais sigilosas como no caso do CPF, o qual deve ser &amp;#xD;&amp;#xA;descaracterizado por meio da ocultação dos três primeiros dígitos e dos dois dígitos &amp;#xD;&amp;#xA;verificadores, conforme orientação disposta no art. 129 § 2o da Lei no 13.473/2017 (LDO &amp;#xD;&amp;#xA;2018).&amp;#xD;&amp;#xA;Página 6 de 6&amp;#xD;&amp;#xA; 3. Campo Ente Federativo Responsável – EFR, no Layout Principal (Dados &amp;#xD;&amp;#xA;Cadastrais): Deve ser preenchido para os casos de Órgãos e Entidades do grupo de &amp;#xD;&amp;#xA;Natureza Jurídica 1XX. Para as demais naturezas, esse atributo fica em branco.&amp;#xD;&amp;#xA;Exemplos de texto que deverão aparecer no arquivo final: UNIÃO; DISTRITO FEDERAL; &amp;#xD;&amp;#xA;BAHIA; para municípios, exibir também a sigla da UF: SÃO PAULO – SP;&amp;#xD;&amp;#xA;BELO HORIZONTE – MG;&amp;#xD;&amp;#xA; 4. Campo Faixa Etária, no Layout Sócios:&amp;#xD;&amp;#xA;Baseada na data de nascimento do CPF de cada sócio, deverá ser criado o valor para o &amp;#xD;&amp;#xA;campo &amp;quot;Faixa Etária&amp;quot; conforme a regra abaixo:&amp;#xD;&amp;#xA;- 1 para os intervalos entre 0 a 12 anos;&amp;#xD;&amp;#xA;- 2 para os intervalos entre 13 a 20 anos;&amp;#xD;&amp;#xA;- 3 para os intervalos entre 21 a 30 anos;&amp;#xD;&amp;#xA;- 4 para os intervalos entre 31 a 40 anos;&amp;#xD;&amp;#xA;- 5 para os intervalos entre 41 a 50 anos;&amp;#xD;&amp;#xA;- 6 para os intervalos entre 51 a 60 anos;&amp;#xD;&amp;#xA;- 7 para os intervalos entre 61 a 70 anos;&amp;#xD;&amp;#xA;- 8 para os intervalos entre 71 a 80 anos; - 9 para maiores de 80 anos.&amp;#xD;&amp;#xA;- 0 para não se aplica.&amp;#xD;&amp;#xA; 5. O Campo CNAE FISCAL SECUNDÁRIA, no Layout Estabelecimentos:&amp;#xD;&amp;#xA;Deve ser preenchido com cada ocorrência sendo separada por vírgula, para os casos de &amp;#xD;&amp;#xA;várias ocorrências.' /&gt;" Guid="6a63a9d7-2ac5-4238-8503-a79073d13f74" InformativeScreenshot="9ae0a0539e53029858d273df457eb60e.png" ScopeSelectorArgument="&lt;wnd app='chrome.exe' cls='Chrome_WidgetWin_1' title='Microsoft Word -*' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V4" Visibility="Interactive" />
+                    </uix:NCheckState.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </uix:NCheckState>
+                </Sequence>
+                <Sequence DisplayName="Salvar documento" sap:VirtualizedContainerService.HintSize="1062,1019" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <uix:NCheckState DisplayName="Check App State - Verifica tela de Salvar Como" sap:VirtualizedContainerService.HintSize="1000,904" sap2010:WorkflowViewState.IdRef="NCheckState_2" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Timeout="10" Version="V3">
+                    <uix:NCheckState.IfExists>
+                      <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="496,622" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Tela de Salvar Como Idenficada&quot;]" />
+                        <Assign sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_1">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[out_strDiretorioCompleto]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[in_strDiretorioCaminho + "\cnpj-metadados.pdf" + "[k(Enter)]"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into - Caminho" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="434,243" sap2010:WorkflowViewState.IdRef="NTypeInto_1" InteractionMode="HardwareEvents" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Text="[out_strDiretorioCompleto]" Version="V3">
+                          <uix:NTypeInto.Target>
+                            <uix:TargetAnchorable BrowserURL="https://www.gov.br/receitafederal/dados/cnpj-metadados.pdf" CVScreenId="85d476be-200e-404b-8440-63ae8be14899" CvElementArea="134, 366, 619, 23" CvType="InputBox" DesignTimeRectangle="136, 369, 599, 17" DesignTimeScaleFactor="1" ElementType="InputBox" FullSelectorArgument="&lt;wnd aaname='Painel do Explorer' cls='DirectUIHWND' /&gt;&lt;wnd aaname='Nome:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;" FuzzySelectorArgument="&lt;wnd aaname='Painel do Explorer' cls='DirectUIHWND' /&gt;&lt;wnd aaname='Nome:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;" Guid="24a5f56b-44e4-496b-a81f-3b2f47e022b4" InformativeScreenshot="5b05132101d2df07ccef2ea70b2a70ad.png" IsResponsive="True" ScopeSelectorArgument="&lt;wnd app='chrome.exe' omit:cls='#32770' title='Salvar como' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                              <uix:TargetAnchorable.Anchors>
+                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                  <uix:Target CVScreenId="85d476be-200e-404b-8440-63ae8be14899" CvTextArea="91, 371, 38, 12" CvTextArgument="Nome:" CvType="Text" DesignTimeRectangle="18, 366, 115, 23" ElementType="Text" FullSelectorArgument="&lt;wnd aaname='Painel do Explorer' cls='DirectUIHWND' /&gt;&lt;ctrl name='Painel do Explorer' role='pane' /&gt;&lt;ctrl name='Painel de Layout de Pastas' role='pane' /&gt;&lt;ctrl name='Painel de Detalhes' role='pane' /&gt;&lt;ctrl name='Nome:' role='text' /&gt;" FuzzySelectorArgument="&lt;wnd aaname='Painel do Explorer' cls='DirectUIHWND' /&gt;&lt;ctrl name='Painel do Explorer' role='pane' /&gt;&lt;ctrl name='Painel de Layout de Pastas' role='pane' /&gt;&lt;ctrl name='Painel de Detalhes' role='pane' /&gt;&lt;ctrl name='Nome:' role='text' automationid='' check:text='Nome:' /&gt;" Guid="92799fb2-9b19-4ff8-8b44-93fa66336b59" SearchSteps="Selector, FuzzySelector, CV" />
+                                </scg:List>
+                              </uix:TargetAnchorable.Anchors>
+                            </uix:TargetAnchorable>
+                          </uix:NTypeInto.Target>
+                        </uix:NTypeInto>
+                      </Sequence>
+                    </uix:NCheckState.IfExists>
+                    <uix:NCheckState.IfNotExists>
+                      <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="450,380" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="[&quot;Tela de Salvar Como não identificada. Documento: &quot; + in_strDocumento]" />
+                        <Throw Exception="[New Exception(&quot;Tela de Salvar Como não identificada. Documento: &quot; + in_strDocumento)]" sap:VirtualizedContainerService.HintSize="388,115" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                      </Sequence>
+                    </uix:NCheckState.IfNotExists>
+                    <uix:NCheckState.Target>
+                      <uix:TargetAnchorable BrowserURL="https://www.gov.br/receitafederal/dados/cnpj-metadados.pdf" DesignTimeRectangle="0, 0, 768, 480" DesignTimeScaleFactor="1" Guid="45cc8c00-5d59-4be3-8a7b-480a0a5ce275" InformativeScreenshot="edb56bc5bf9c1812501933053b4ff679.png" ScopeSelectorArgument="&lt;wnd app='chrome.exe' omit:cls='#32770' title='Salvar como' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V4" Visibility="Interactive">
+                        <uix:TargetAnchorable.FuzzySelectorArgument>
+                          <InArgument x:TypeArguments="x:String">
+                            <Literal x:TypeArguments="x:String" Value="" />
+                          </InArgument>
+                        </uix:TargetAnchorable.FuzzySelectorArgument>
+                      </uix:TargetAnchorable>
+                    </uix:NCheckState.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </uix:NCheckState>
+                </Sequence>
+              </Sequence>
+            </Sequence>
+          </ActivityAction>
+        </uix:NApplicationCard.Body>
+        <uix:NApplicationCard.TargetApp>
+          <uix:TargetApp Area="-8, -8, 1936, 1048" BrowserType="Chrome" IconBase64="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" InformativeScreenshot="46b49b005c556a3065d17ab2c9fb4cec.jpg" Selector="&lt;html app='chrome.exe' omit:title='Portal de Dados Abertos' /&gt;" Title="Portal de Dados Abertos" Url="[in_strURL]" />
+        </uix:NApplicationCard.TargetApp>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </uix:NApplicationCard>
+      <Sequence x:Key="ZIP" DisplayName="Baixar documento" sap:VirtualizedContainerService.HintSize="608,637" sap2010:WorkflowViewState.IdRef="Sequence_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <uix:NApplicationCard AttachMode="ByInstance" CloseMode="Never" DisplayName="Use Browser Chrome: Index of /CNPJ/dados_abertos_cnpj" sap:VirtualizedContainerService.HintSize="546,589" sap2010:WorkflowViewState.IdRef="NApplicationCard_2" InteractionMode="DebuggerApi" OpenMode="IfNotOpen" ScopeGuid="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V2" WindowResize="Maximize">
+          <uix:NApplicationCard.Body>
+            <ActivityAction x:TypeArguments="x:Object">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="512,309" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Sequence DisplayName="Buscar/Abrir documento" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <uix:NExtractData AppendResults="False" ContinueOnError="True" DataTable="[ExtractDataTable]" DisplayName="Extract Table Data" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Table' AddCvHeader='true' IsScrollEnabled='false'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column-0' ReferenceIdx='0' Name='Column-0'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column-0 Src' ReferenceIdx='1' Name='Column-0 Src'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column-0 Alt Text' ReferenceIdx='2' Name='Column-0 Alt Text'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Name' ReferenceIdx='3' Name='Name'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Name  Url' ReferenceIdx='4' Name='Name  Url'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Last modified' ReferenceIdx='5' Name='Last modified'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Size' ReferenceIdx='6' Name='Size'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Description' ReferenceIdx='7' Name='Description'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Column-0' attr='fulltext' name2='Column-0 Src' attr2='src' name3='Column-0 Alt Text' attr3='alt' /&gt;&lt;column name='Name ' attr='fulltext' name2='Name  Url' attr2='href' /&gt;&lt;column name='Last modified ' attr='fulltext' /&gt;&lt;column name='Size ' attr='fulltext' /&gt;&lt;column name='Description ' attr='fulltext' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="388,189" sap2010:WorkflowViewState.IdRef="NExtractData_2" LimitExtractionTo="None" MaximumResults="0" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                    <uix:NExtractData.Target>
+                      <uix:TargetAnchorable BrowserURL="https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/2024-08/" DesignTimeRectangle="16, 161, 417, 1060" DesignTimeScaleFactor="1" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;" Guid="a23e0f79-6109-4f0b-927c-4743b5f5444f" InformativeScreenshot="97839539a45a2b6de535dacce5f66dd8.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Index of /CNPJ/dados_abertos_cnpj/2024-08' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+                    </uix:NExtractData.Target>
+                  </uix:NExtractData>
+                  <ui:FilterDataTable DataTable="[ExtractDataTable]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="388,186" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[ExtractDataTable]" SelectColumnsMode="Remove">
+                    <ui:FilterDataTable.Filters>
+                      <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                        <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">
+                          <ui:FilterOperationArgument.Column>
+                            <InArgument x:TypeArguments="x:String">["Name"]</InArgument>
+                          </ui:FilterOperationArgument.Column>
+                          <ui:FilterOperationArgument.Operand>
+                            <InArgument x:TypeArguments="x:String">[in_strDocumento]</InArgument>
+                          </ui:FilterOperationArgument.Operand>
+                        </ui:FilterOperationArgument>
+                      </scg:List>
+                    </ui:FilterDataTable.Filters>
+                    <ui:FilterDataTable.SelectColumns>
+                      <scg:List x:TypeArguments="InArgument" Capacity="4">
+                        <x:Null />
+                      </scg:List>
+                    </ui:FilterDataTable.SelectColumns>
+                  </ui:FilterDataTable>
+                </Sequence>
+                <Sequence DisplayName="Baixar Documentos" sap:VirtualizedContainerService.HintSize="450,106" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="388,77" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                    <ui:ForEachRow.Body>
+                      <ActivityAction x:TypeArguments="sd:DataRow">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,552" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="upr:ILocalResource" Name="strArquivoBaixado" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <uasf:DownloadFileFromUrl Timeout="{x:Null}" ConflictResolution="Rename" DisplayName="Download File from URL" FileName="[&quot;Data\Output\&quot;+CurrentRow.Item(&quot;Name&quot;).ToString]" sap:VirtualizedContainerService.HintSize="354,122" sap2010:WorkflowViewState.IdRef="DownloadFileFromUrl_2" ResponseAttachment="[strArquivoBaixado]" Url="[CurrentRow.Item(&quot;Name  Url&quot;).ToString]" />
+                          <uascw:ExtractFiles Content="{x:Null}" DestinationFolderInfo="{x:Null}" File="{x:Null}" Password="{x:Null}" CodePage="Default" ConflictResolution="Replace" DestinationFolder="Data\Output\" DisplayName="Extract/Unzip Files" ExtractToADedicatedFolder="True" FileToExtract="[&quot;Data\Output\&quot;+CurrentRow.Item(&quot;Name&quot;).ToString]" sap:VirtualizedContainerService.HintSize="354,239" sap2010:WorkflowViewState.IdRef="ExtractFiles_1" SkipUnsupportedFiles="False" />
+                          <ui:DeleteFileX DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="354,103" sap2010:WorkflowViewState.IdRef="DeleteFileX_1" Path="[&quot;Data\Output\&quot;+CurrentRow.Item(&quot;Name&quot;).ToString]" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEachRow.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEachRow>
+                </Sequence>
+              </Sequence>
+            </ActivityAction>
+          </uix:NApplicationCard.Body>
+          <uix:NApplicationCard.TargetApp>
+            <uix:TargetApp Area="-8, -8, 1936, 1003" BrowserType="Chrome" IconBase64="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" InformativeScreenshot="2732d164857b659bee52d86c1d1358d5.jpg" Selector="&lt;html app='chrome.exe' title='Index of /CNPJ/dados_abertos_cnpj' /&gt;" Title="Portal de Dados Abertos" Url="[in_strUrlZips.Replace(&quot;%yyyy-MM%&quot;,Datetime.Now.AddMonths(-2).ToString(&quot;yyyy-MM&quot;))]" />
+          </uix:NApplicationCard.TargetApp>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </uix:NApplicationCard>
+      </Sequence>
+    </Switch>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1260,48" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="512,473" sap2010:WorkflowViewState.IdRef="Sequence_38">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Buscar/Abrir documento" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="Sequence_19">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <uix:NCheckState DisplayName="Check App State 'Documento Atual'" sap:VirtualizedContainerService.HintSize="388,57" sap2010:WorkflowViewState.IdRef="NCheckState_5" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+              <uix:NCheckState.IfExists>
+                <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,308" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click - 'Acessar o recurso'" sap:VirtualizedContainerService.HintSize="388,218" sap2010:WorkflowViewState.IdRef="NClick_4" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                    <uix:NClick.Target>
+                      <uix:TargetAnchorable BrowserURL="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" CVScreenId="b3a1463f-b7eb-401f-bbd6-f8febcd57d83" CvElementArea="880, 938, 198, 41" CvTextArea="921, 951, 114, 13" CvTextArgument="Acessar O recurso" CvType="Button" DesignTimeRectangle="882, 940, 194, 38" DesignTimeScaleFactor="1" ElementType="Button" FullSelectorArgument="&lt;webctrl id='btnDownloadUrl' idx='3' tag='BUTTON' /&gt;" FuzzySelectorArgument="&lt;webctrl id='btnDownloadUrl' type='button' tag='BUTTON' class='btn btn btn-secondary btn-secondary' aaname=' Acessar o recurso ' check:innerText='Acessar o recurso' /&gt;" Guid="06995dc3-18cf-4e68-a6cd-a9c52b940b6d" InformativeScreenshot="296c730745f713cdb76b282250a10bfd.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Portal de Dados Abertos' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                        <uix:TargetAnchorable.Anchors>
+                          <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                            <uix:Target CVScreenId="b3a1463f-b7eb-401f-bbd6-f8febcd57d83" CvTextArea="881, 810, 719, 21" CvTextArgument="DADOS ABERTOS CNPJ" CvType="Text" DesignTimeRectangle="882, 808, 997, 28" ElementType="Text" FullSelectorArgument="&lt;webctrl idx='3' parentid='collapse-recursos' tag='H4' /&gt;" FuzzySelectorArgument="&lt;webctrl type='' parentid='collapse-recursos' tag='H4' class='' aaname='DADOS ABERTOS CNPJ' check:innerText='DADOS ABERTOS CNPJ' /&gt;" Guid="53390dec-d028-44f2-8a62-29c9a4e6f347" SearchSteps="FuzzySelector, CV" />
+                          </scg:List>
+                        </uix:TargetAnchorable.Anchors>
+                      </uix:TargetAnchorable>
+                    </uix:NClick.Target>
+                    <uix:NClick.VerifyOptions>
+                      <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                        <uix:VerifyExecutionOptions.Retry>
+                          <InArgument x:TypeArguments="x:Boolean" />
+                        </uix:VerifyExecutionOptions.Retry>
+                        <uix:VerifyExecutionOptions.Timeout>
+                          <InArgument x:TypeArguments="x:Double" />
+                        </uix:VerifyExecutionOptions.Timeout>
+                      </uix:VerifyExecutionOptions>
+                    </uix:NClick.VerifyOptions>
+                  </uix:NClick>
+                </Sequence>
+              </uix:NCheckState.IfExists>
+              <uix:NCheckState.IfNotExists>
+                <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </uix:NCheckState.IfNotExists>
+              <uix:NCheckState.Target>
+                <uix:TargetAnchorable BrowserURL="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" CVScreenId="937dbcf7-420b-4e44-b8b9-2426360fbd3b" CvTextArea="881, 585, 432, 24" CvTextArgument="DADOS ABERTOS CNPJ" CvType="Text" DesignTimeRectangle="882, 583, 997, 27" DesignTimeScaleFactor="1" ElementType="Text" FullSelectorArgument="&lt;webctrl parentid='collapse-recursos' tag='H4' aaname='DADOS ABERTOS CNPJ' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='collapse-recursos' tag='H4' type='' class='' aaname='DADOS ABERTOS CNPJ' check:innerText='DADOS ABERTOS CNPJ' /&gt;" Guid="d5e3b2c1-2753-4f38-8d34-dc758019cbfb" InformativeScreenshot="0b77f2e0d0aa0b67c4d0d454daddded1.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Portal de Dados Abertos' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+              </uix:NCheckState.Target>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </uix:NCheckState>
+            <uix:NCheckState DisplayName="Check App State - Verifica se existe o botão de download" sap:VirtualizedContainerService.HintSize="388,57" sap2010:WorkflowViewState.IdRef="NCheckState_6" IsLoose="True" Timeout="10" Version="V3">
+              <uix:NCheckState.IfExists>
+                <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,483" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,175" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Menu DADOS ABERTOS CNPJ aberto com sucesso&quot;]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:LogMessage>
+                  <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click - Baixar" sap:VirtualizedContainerService.HintSize="388,218" sap2010:WorkflowViewState.IdRef="NClick_6" InteractionMode="HardwareEvents" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                    <uix:NClick.Target>
+                      <uix:TargetAnchorable BrowserURL="https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/?C=N;O=D" CVScreenId="0859fd5f-c526-4a0c-b2ea-5a2cd3a491b9" CvTextArea="41, 241, 60, 14" CvTextArgument="[Datetime.Now.AddMonths(-1).ToString(&quot;yyyy-MM&quot;)+&quot;/&quot;]" CvType="Text" DesignTimeRectangle="43, 240, 58, 17" DesignTimeScaleFactor="1" ElementType="Text" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl tableRow='4' tag='A' /&gt;" FuzzySelectorArgument="[&quot;&lt;webctrl tag='TABLE' /&gt;&lt;webctrl type='' tag='A' class='' aaname='&quot;+Datetime.Now.AddMonths(-1).ToString(&quot;yyyy-MM&quot;)+&quot;/&quot;+&quot;' check:innerText='&quot;+Datetime.Now.AddMonths(-1).ToString(&quot;yyyy-MM&quot;)+&quot;/&quot;+&quot;' /&gt;&quot;]" Guid="63f35853-3a3d-4b33-9faf-0cdc6809cfbf" InformativeScreenshot="2577adf6490013c817cf790c5e417868.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Index of /CNPJ/dados_abertos_cnpj' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                    </uix:NClick.Target>
+                    <uix:NClick.VerifyOptions>
+                      <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                        <uix:VerifyExecutionOptions.Retry>
+                          <InArgument x:TypeArguments="x:Boolean" />
+                        </uix:VerifyExecutionOptions.Retry>
+                        <uix:VerifyExecutionOptions.Timeout>
+                          <InArgument x:TypeArguments="x:Double" />
+                        </uix:VerifyExecutionOptions.Timeout>
+                      </uix:VerifyExecutionOptions>
+                    </uix:NClick.VerifyOptions>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </uix:NClick>
+                </Sequence>
+              </uix:NCheckState.IfExists>
+              <uix:NCheckState.IfNotExists>
+                <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="450,380" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,175" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Error" Message="[&quot;Erro ao tentar abrir menu DADOS ABERTOS CNPJ&quot;]" />
+                  <Throw Exception="[New Exception(&quot;Erro ao tentar abrir menu DADOS ABERTOS CNPJ&quot;)]" sap:VirtualizedContainerService.HintSize="388,115" sap2010:WorkflowViewState.IdRef="Throw_4" />
+                </Sequence>
+              </uix:NCheckState.IfNotExists>
+              <uix:NCheckState.Target>
+                <uix:TargetAnchorable BrowserURL="https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/?C=N;O=D" CVScreenId="573add06-5cf2-4d21-8b6d-64083162e59d" CvTextArea="45, 215, 105, 17" CvTextArgument="Parent Directory" CvType="Text" DesignTimeRectangle="43, 214, 106, 17" DesignTimeScaleFactor="1" ElementType="Text" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl tableRow='*' tag='A' aaname='Parent Directory' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl type='' tag='A' class='' aaname='Parent Directory' check:innerText='Parent Directory' /&gt;" Guid="080948ed-7bb0-4e9e-8db2-c82b3c0b8568" InformativeScreenshot="f6c4efe4d4add261bed3799c1de84112.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Index of /CNPJ/dados_abertos_cnpj' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+              </uix:NCheckState.Target>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </uix:NCheckState>
+            <uix:NExtractData AppendResults="False" ContinueOnError="True" DataTable="[ExtractDataTable]" DisplayName="Extract Table Data" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Table' AddCvHeader='true' IsScrollEnabled='false'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column-0' ReferenceIdx='0' Name='Column-0'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column-0 Src' ReferenceIdx='1' Name='Column-0 Src'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column-0 Alt Text' ReferenceIdx='2' Name='Column-0 Alt Text'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Name' ReferenceIdx='3' Name='Name'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Name  Url' ReferenceIdx='4' Name='Name  Url'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Last modified' ReferenceIdx='5' Name='Last modified'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Size' ReferenceIdx='6' Name='Size'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Description' ReferenceIdx='7' Name='Description'&gt;&#xA;&#x9;&#x9;&lt;IsValidName&gt;true&lt;/IsValidName&gt;&#xA;&#x9;&#x9;&lt;ValidationErrorMessage /&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;CanExtractSimilar&gt;false&lt;/CanExtractSimilar&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest'&gt;&lt;column name='Column-0' attr='fulltext' name2='Column-0 Src' attr2='src' name3='Column-0 Alt Text' attr3='alt' /&gt;&lt;column name='Name ' attr='fulltext' name2='Name  Url' attr2='href' /&gt;&lt;column name='Last modified ' attr='fulltext' /&gt;&lt;column name='Size ' attr='fulltext' /&gt;&lt;column name='Description ' attr='fulltext' /&gt;&lt;/extract-table&gt;" sap:VirtualizedContainerService.HintSize="388,189" sap2010:WorkflowViewState.IdRef="NExtractData_1" LimitExtractionTo="None" MaximumResults="0" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+              <uix:NExtractData.Target>
+                <uix:TargetAnchorable BrowserURL="https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/2024-08/" DesignTimeRectangle="16, 161, 417, 1060" DesignTimeScaleFactor="1" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;" Guid="a23e0f79-6109-4f0b-927c-4743b5f5444f" InformativeScreenshot="97839539a45a2b6de535dacce5f66dd8.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Index of /CNPJ/dados_abertos_cnpj/2024-08' /&gt;" SearchSteps="Selector" Version="V4" Visibility="Interactive" />
+              </uix:NExtractData.Target>
+            </uix:NExtractData>
+            <ui:FilterDataTable DataTable="[ExtractDataTable]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="388,184" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[ExtractDataTable]" SelectColumnsMode="Remove">
+              <ui:FilterDataTable.Filters>
+                <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                  <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">
+                    <ui:FilterOperationArgument.Column>
+                      <InArgument x:TypeArguments="x:String">["Name"]</InArgument>
+                    </ui:FilterOperationArgument.Column>
+                    <ui:FilterOperationArgument.Operand>
+                      <InArgument x:TypeArguments="x:String">[in_strDocumento]</InArgument>
+                    </ui:FilterOperationArgument.Operand>
+                  </ui:FilterOperationArgument>
+                </scg:List>
+              </ui:FilterDataTable.Filters>
+              <ui:FilterDataTable.SelectColumns>
+                <scg:List x:TypeArguments="InArgument" Capacity="4">
+                  <x:Null />
+                </scg:List>
+              </ui:FilterDataTable.SelectColumns>
+            </ui:FilterDataTable>
+          </Sequence>
+          <Sequence DisplayName="Baixar Documentos" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="Sequence_24">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="388,50" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="512,568" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="si:FileInfo" Name="strArquivoBaixado" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:GetLastDownloadedFile FileResource="{x:Null}" IgnoreFiles="{x:Null}" Timeout="{x:Null}" DisplayName="Wait for Download" DownloadFolder="[System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), &quot;Downloads\Case_RPA\Case_RPA\Data\Output&quot;)]" File="[strArquivoBaixado]" sap:VirtualizedContainerService.HintSize="450,480" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_1">
+                      <ui:GetLastDownloadedFile.Body>
+                        <ActivityAction>
+                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="416,201" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <uasf:DownloadFileFromUrl ResponseAttachment="{x:Null}" Timeout="{x:Null}" ConflictResolution="Rename" DisplayName="Download File from URL" FileName="[CurrentRow.Item(&quot;Name&quot;).ToString]" sap:VirtualizedContainerService.HintSize="354,113" sap2010:WorkflowViewState.IdRef="DownloadFileFromUrl_1" Url="[CurrentRow.Item(&quot;Name Url&quot;).ToString]" />
+                          </Sequence>
+                        </ActivityAction>
+                      </ui:GetLastDownloadedFile.Body>
+                    </ui:GetLastDownloadedFile>
+                  </Sequence>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ForEachRow>
+          </Sequence>
+          <uix:NCheckState DisplayName="Check App State - Verifica se existe o botão de download" sap:VirtualizedContainerService.HintSize="450,84" sap2010:WorkflowViewState.IdRef="NCheckState_7" IsLoose="True" Version="V3">
+            <uix:NCheckState.IfExists>
+              <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,270" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <uix:NClick ActivateBefore="{x:Null}" ClickType="Single" DisplayName="Click '2024-08/'" sap:VirtualizedContainerService.HintSize="388,182" sap2010:WorkflowViewState.IdRef="NClick_9" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                  <uix:NClick.Target>
+                    <uix:TargetAnchorable BrowserURL="https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/?C=N;O=D" CVScreenId="1f0c06d7-153e-4527-aa06-9a5f8552a883" CvTextArea="41, 241, 60, 14" CvTextArgument="2024-08/" CvType="Text" DesignTimeRectangle="42, 237, 108, 24" DesignTimeScaleFactor="1" FullSelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl tableCol='2' tableRow='4' tag='TD' colName='Name' innertext='2024-08*' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TABLE' /&gt;&lt;webctrl type='' class='' tag='TD' colName='Name' innertext='2024-08/*' aaname='*' check:text='2024-08/' /&gt;" Guid="1a9a277d-7296-4cb4-a69b-7ed085e7c158" InformativeScreenshot="7e89290030fd73a5a40ab5b5d0dec133.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Index of /CNPJ/dados_abertos_cnpj' /&gt;" SearchSteps="Selector, CV" Version="V4" Visibility="Interactive" />
+                  </uix:NClick.Target>
+                </uix:NClick>
+              </Sequence>
+            </uix:NCheckState.IfExists>
+            <uix:NCheckState.IfNotExists>
+              <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Sequence>
+            </uix:NCheckState.IfNotExists>
+            <uix:NCheckState.Target>
+              <uix:TargetAnchorable BrowserURL="https://dadosabertos.rfb.gov.br/CNPJ/dados_abertos_cnpj/?C=N;O=D" CVScreenId="ac78a7df-00dc-44a6-8340-6d755537dad1" CvTextArea="14, 108, 497, 34" CvTextArgument="Index of f/CNPJ/dados_abertos_enpj" CvType="Text" DesignTimeRectangle="16, 103, 1904, 37" DesignTimeScaleFactor="1" ElementType="Text" FullSelectorArgument="&lt;webctrl tag='H1' aaname='Index of /CNPJ/dados_abertos_cnpj' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='H1' aaname='Index of /CNPJ/dados_abertos_cnpj' type='' class='' check:text='Index of /CNPJ/dados_abertos_cnpj' /&gt;" Guid="062f9652-eda2-4583-9a3d-83d68f3d35b1" InformativeScreenshot="c7ba95b41ae10fed35ddb1f5ea0089f3.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Index of /CNPJ/dados_abertos_cnpj' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive" WaitForReadyArgument="Interactive" />
+            </uix:NCheckState.Target>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </uix:NCheckState>
+          <uix:NCheckState DisplayName="Check App State 'Recursos a expandir'" sap:VirtualizedContainerService.HintSize="450,75" sap2010:WorkflowViewState.IdRef="NCheckState_3" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+            <uix:NCheckState.IfExists>
+              <Sequence DisplayName="Target appears" sap:VirtualizedContainerService.HintSize="450,308" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click - Recursos" sap:VirtualizedContainerService.HintSize="388,218" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="9f0bfb9f-ad7a-498e-91e3-7aba778389f4" Version="V3">
+                  <uix:NClick.Target>
+                    <uix:TargetAnchorable BrowserURL="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" CVScreenId="78c8d035-e740-4d13-8db0-270a7f978375" CvElementArea="1823, 796, 26, 28" CvType="ArrowButton" DesignTimeRectangle="1824, 802, 24, 16" DesignTimeScaleFactor="1" FullSelectorArgument="&lt;webctrl parentid='btnCollapse' tag='EM' parentclass='float-right when-closed' idx='3' /&gt;" FuzzySelectorArgument="&lt;webctrl type='' parentid='btnCollapse' tag='EM' class='fa fa-angle-down' aaname='' /&gt;" Guid="033de48b-2825-4e93-a230-335f0eabbab3" InformativeScreenshot="18fd8f05b626007230189ea4ba2bd480.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Portal de Dados Abertos' /&gt;" SearchSteps="Selector, FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                      <uix:TargetAnchorable.Anchors>
+                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                          <uix:Target CVScreenId="78c8d035-e740-4d13-8db0-270a7f978375" CvTextArea="703, 797, 101, 20" CvTextArgument="Recursos" CvType="Text" DesignTimeRectangle="703, 794, 102, 28" ElementType="Text" FullSelectorArgument="&lt;webctrl aaname='Recursos' parentid='btnCollapse' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='Recursos' parentid='btnCollapse' tag='SPAN' type='' class='' check:innerText='Recursos' /&gt;" Guid="405bddf6-30db-4d96-9594-6bf80ab92c5e" SearchSteps="FuzzySelector, CV" />
+                        </scg:List>
+                      </uix:TargetAnchorable.Anchors>
+                    </uix:TargetAnchorable>
+                  </uix:NClick.Target>
+                  <uix:NClick.VerifyOptions>
+                    <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                      <uix:VerifyExecutionOptions.Retry>
+                        <InArgument x:TypeArguments="x:Boolean" />
+                      </uix:VerifyExecutionOptions.Retry>
+                      <uix:VerifyExecutionOptions.Timeout>
+                        <InArgument x:TypeArguments="x:Double" />
+                      </uix:VerifyExecutionOptions.Timeout>
+                    </uix:VerifyExecutionOptions>
+                  </uix:NClick.VerifyOptions>
+                </uix:NClick>
+              </Sequence>
+            </uix:NCheckState.IfExists>
+            <uix:NCheckState.IfNotExists>
+              <Sequence DisplayName="Target does not appear" sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Sequence>
+            </uix:NCheckState.IfNotExists>
+            <uix:NCheckState.Target>
+              <uix:TargetAnchorable BrowserURL="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" CVScreenId="5d9227dd-59c9-45ab-8b8c-cf15a56d1ddc" CvElementArea="1823, 495, 26, 28" CvType="ArrowButton" DesignTimeRectangle="1824, 502, 24, 16" DesignTimeScaleFactor="1" FullSelectorArgument="&lt;webctrl parentid='btnCollapse' tag='EM' class='*angle-down' idx='3' /&gt;" FuzzySelectorArgument="&lt;webctrl type='' parentid='btnCollapse' tag='EM' class='fa fa-angle-down' aaname='' /&gt;" Guid="2329782b-1f0c-4d13-923d-c9fbc80c2327" InformativeScreenshot="9e1aacd3a103efc31904e47735f2b26f.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Portal de Dados Abertos' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                <uix:TargetAnchorable.Anchors>
+                  <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                    <uix:Target CVScreenId="5d9227dd-59c9-45ab-8b8c-cf15a56d1ddc" CvTextArea="703, 497, 101, 20" CvTextArgument="Recursos" CvType="Text" DesignTimeRectangle="703, 494, 102, 28" ElementType="Text" FullSelectorArgument="&lt;webctrl aaname='Recursos' parentid='btnCollapse' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='Recursos' parentid='btnCollapse' tag='SPAN' type='' class='' check:innerText='Recursos' /&gt;" Guid="c2c0fd37-8286-4b0d-8577-c7fcf5c7c973" SearchSteps="FuzzySelector, CV" />
+                  </scg:List>
+                </uix:TargetAnchorable.Anchors>
+              </uix:TargetAnchorable>
+            </uix:NCheckState.Target>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </uix:NCheckState>
+        </Sequence>
+      </ui:CommentOut.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:CommentOut>
+  </Sequence>
+</Activity>
